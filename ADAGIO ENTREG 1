@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description"
+        content="ADAGIO: proyecto audiovisual universitario y consulta psicológica ficticia.">
+
+  <title>ADAGIO — Un espacio para escucharse</title>
+
+  <style>
+    /* =====================================
+       PALETA DE COLORES
+       ===================================== */
+    :root {
+      --fondo: #1B2845;
+      --tarjeta: #274060;
+      --azul-medio: #335C81;
+      --azul-claro: #65AFFF;
+      --azul-acento: #5899E2;
+      --texto: #FFFFFF;
+      --texto-suave: #DCEAFF;
+    }
+
+    /* =====================================
+       DISEÑO GENERAL
+       ===================================== */
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--fondo);
+      color: var(--texto);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    .contenedor {
+      width: min(1150px, calc(100% - 48px));
+      margin: auto;
+    }
+
+    h1, h2, h3 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: normal;
+      line-height: 1.15;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    a:focus-visible {
+      outline: 3px solid #FFFFFF;
+      outline-offset: 5px;
+    }
+
+    section {
+      scroll-margin-top: 24px;
+    }
+
+    .categoria {
+      font-size: 16px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .boton,
+    .volver {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 12px 22px;
+      background: var(--azul-claro);
+      color: var(--fondo);
+      border: 1px solid var(--azul-claro);
+      border-radius: 4px;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .boton:hover,
+    .volver:hover {
+      background: var(--azul-acento);
+      border-color: var(--azul-acento);
+    }
+
+    /* =====================================
+       ENCABEZADO
+       ===================================== */
+    #encabezado .barra {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding: 25px 0;
+      border-bottom: 1px solid var(--azul-acento);
+    }
+
+    .identidad {
+      flex-shrink: 0;
+    }
+
+    .marca {
+      font-family: Georgia, serif;
+      font-size: 30px;
+      letter-spacing: 5px;
+    }
+
+    .subtitulo-marca {
+      margin: 4px 0 0;
+      color: var(--texto-suave);
+      font-size: 16px;
+    }
+
+    .identificacion {
+      margin: 0;
+      color: var(--texto-suave);
+      text-align: right;
+    }
+
+    .presentacion {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 45px;
+      align-items: center;
+      padding: 55px 0 40px;
+    }
+
+    #encabezado h1 {
+      font-size: clamp(44px, 6vw, 74px);
+      letter-spacing: -2px;
+      margin: 20px 0;
+    }
+
+    #encabezado h1 em {
+      color: var(--azul-claro);
+    }
+
+    .descripcion {
+      max-width: 600px;
+      color: var(--texto-suave);
+      font-size: 18px;
+      margin-bottom: 25px;
+    }
+
+    .ilustracion {
+      background: var(--azul-medio);
+      border-radius: 150px 150px 5px 5px;
+      overflow: hidden;
+    }
+
+    .ilustracion svg {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .pie-imagen {
+      color: var(--texto-suave);
+      margin-top: 10px;
+    }
+
+    .equipo {
+      border-top: 1px solid var(--azul-acento);
+      padding: 20px 0;
+    }
+
+    .equipo p {
+      margin: 8px 0;
+    }
+
+    /* =====================================
+       HUB Y TARJETAS
+       ===================================== */
+    main {
+      padding: 35px 0 55px;
+    }
+
+    #portada h2 {
+      font-size: 42px;
+      margin: 10px 0 18px;
+    }
+
+    .descripcion-hub {
+      max-width: 700px;
+      color: var(--texto-suave);
+    }
+
+    .tarjetas {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .tarjeta {
+      display: flex;
+      flex-direction: column;
+      padding: 25px;
+      background: var(--tarjeta);
+      border: 1px solid var(--azul-acento);
+    }
+
+    .tarjeta .numero {
+      color: var(--texto-suave);
+      margin: 0 0 25px;
+    }
+
+    .tarjeta h3 {
+      font-size: 30px;
+      margin: 0 0 15px;
+    }
+
+    .tarjeta .resumen {
+      color: var(--texto-suave);
+      margin: 0 0 25px;
+    }
+
+    .tarjeta .boton {
+      width: 100%;
+      margin-top: auto;
+    }
+
+    .tarjeta.destacada {
+      background: var(--azul-medio);
+    }
+
+    .tarjeta.destacada .numero,
+    .tarjeta.destacada .resumen {
+      color: var(--texto);
+    }
+
+    .aviso {
+      margin-top: 25px;
+      padding-top: 20px;
+      border-top: 1px solid var(--azul-acento);
+      color: var(--texto-suave);
+    }
+
+    /* =====================================
+       SECCIONES DE CONTENIDO
+       Todas están visibles en la misma página.
+       ===================================== */
+    .seccion-contenido {
+      margin-top: 40px;
+      padding: 35px;
+      background: var(--tarjeta);
+      border: 1px solid var(--azul-acento);
+      border-radius: 8px;
+    }
+
+    .seccion-contenido .categoria {
+      margin-top: 30px;
+      color: var(--azul-claro);
+    }
+
+    .seccion-contenido h2 {
+      max-width: 850px;
+      font-size: clamp(36px, 5vw, 56px);
+      margin: 20px 0;
+    }
+
+    .introduccion {
+      max-width: 750px;
+      color: var(--texto-suave);
+      font-size: 18px;
+    }
+
+    .paneles {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-items: start;
+      gap: 24px;
+      margin-top: 30px;
+    }
+
+    .panel {
+      min-width: 0;
+      padding: 25px;
+      background: var(--fondo);
+      border: 1px solid var(--azul-acento);
+    }
+
+    .panel h3 {
+      color: var(--azul-claro);
+      font-size: 28px;
+      margin: 0 0 15px;
+    }
+
+    .panel p {
+      color: var(--texto-suave);
+    }
+
+    .pendiente {
+      padding: 22px;
+      background: var(--fondo);
+      color: var(--texto-suave);
+      border: 1px dashed var(--azul-acento);
+      margin-top: 25px;
+    }
+
+    #consulta h2 em {
+      color: var(--azul-claro);
+    }
+
+    /* =====================================
+       FOTOS
+       La altura se cambia aquí.
+       ===================================== */
+    .foto-bloque {
+      margin: 25px 0;
+    }
+
+    .foto {
+      display: block;
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      border-radius: 6px;
+      border: 1px solid var(--azul-acento);
+    }
+
+    figcaption {
+      margin-top: 8px;
+      color: var(--texto-suave);
+      font-size: 16px;
+    }
+
+    /* =====================================
+       GOOGLE FORMS
+       ===================================== */
+    .formulario-insertado {
+      display: block;
+      width: 100%;
+      height: 1100px;
+      border: 0;
+      margin-top: 25px;
+      background: #FFFFFF;
+    }
+
+    /* =====================================
+       PIE DE PÁGINA
+       ===================================== */
+    footer {
+      background: var(--tarjeta);
+      padding: 35px 0;
+      border-top: 1px solid var(--azul-acento);
+    }
+
+    .columnas-pie {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 30px;
+    }
+
+    footer p {
+      margin: 8px 0;
+      overflow-wrap: anywhere;
+    }
+
+    footer a {
+      display: inline-block;
+      min-height: 44px;
+      padding: 10px 0;
+      text-underline-offset: 4px;
+    }
+
+    .nota-final {
+      margin-top: 25px;
+      padding-top: 20px;
+      border-top: 1px solid var(--azul-acento);
+    }
+
+    /* =====================================
+       TABLETA
+       ===================================== */
+    @media (max-width: 900px) {
+      .presentacion {
+        gap: 25px;
+      }
+
+      .tarjetas,
+      .columnas-pie {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    /* =====================================
+       MÓVIL
+       ===================================== */
+    @media (max-width: 650px) {
+      .contenedor {
+        width: calc(100% - 36px);
+      }
+
+      #encabezado .barra {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .identificacion {
+        text-align: left;
+      }
+
+      .presentacion,
+      .tarjetas,
+      .paneles,
+      .columnas-pie {
+        grid-template-columns: 1fr;
+      }
+
+      .presentacion {
+        padding-top: 30px;
+      }
+
+      .marca {
+        font-size: 25px;
+      }
+
+      .seccion-contenido {
+        padding: 22px;
+      }
+
+      #portada h2 {
+        font-size: 36px;
+      }
+
+      .foto {
+        height: 240px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =====================================
+       BLOQUE 1: ENCABEZADO
+       ===================================== -->
+  <header id="encabezado" class="contenedor">
+
+    <div class="barra">
+      <div class="identidad">
+        <div class="marca">ADAGIO.</div>
+        <p class="subtitulo-marca">Consulta ficticia</p>
+      </div>
+
+      <p class="identificacion">
+        Proyecto Transversal · Grupo 3
+      </p>
+    </div>
+
+    <div class="presentacion">
+      <div>
+        <p class="categoria">Un espacio para escucharse</p>
+
+        <h1>
+          A veces, cuidar<br>
+          empieza por<br>
+          <em>bajar el ritmo.</em>
+        </h1>
+
+        <p class="descripcion">
+          Bienvenido a ADAGIO. Una consulta imaginaria donde
+          las historias se encuentran, los silencios tienen
+          lugar y la música acompaña lo que cuesta decir.
+        </p>
+
+        <!-- Este enlace baja hasta la consulta. -->
+        <a class="boton" href="#consulta">
+          Entrar en la consulta ↓
+        </a>
+      </div>
+
+      <div>
+        <div class="ilustracion">
+          <svg
+            viewBox="0 0 500 520"
+            role="img"
+            aria-labelledby="imagen-titulo imagen-descripcion"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <title id="imagen-titulo">La consulta de ADAGIO</title>
+            <desc id="imagen-descripcion">
+              Ilustración en tonos azules de un sillón junto
+              a una ventana, una planta y una mesa con un cuaderno.
+            </desc>
+
+            <!-- Pared y suelo -->
+            <rect width="500" height="520" fill="#335C81"/>
+            <rect y="385" width="500" height="135" fill="#274060"/>
+
+            <!-- Ventana -->
+            <rect x="55" y="65" width="185" height="245" fill="#65AFFF"/>
+            <rect x="67" y="77" width="161" height="221" fill="#5899E2"/>
+
+            <path d="M80 290 Q140 170 220 100"
+                  fill="none" stroke="#335C81" stroke-width="25"/>
+
+            <path d="M147 75 V300 M65 187 H230"
+                  fill="none" stroke="#65AFFF" stroke-width="9"/>
+
+            <!-- Cuadro -->
+            <rect x="310" y="95" width="75" height="105" fill="#1B2845"/>
+            <rect x="318" y="103" width="59" height="89" fill="#65AFFF"/>
+
+            <path d="M339 170 Q324 137 347 121 Q375 139 339 170"
+                  fill="none" stroke="#274060" stroke-width="3"/>
+
+            <!-- Sombra -->
+            <ellipse cx="246" cy="458" rx="130" ry="24"
+                     fill="#1B2845" opacity="0.45"/>
+
+            <!-- Sillón -->
+            <path d="M166 410 L155 472 M316 410 L326 472"
+                  fill="none" stroke="#1B2845" stroke-width="12"/>
+
+            <rect x="160" y="250" width="165" height="160"
+                  rx="45" fill="#1B2845"/>
+
+            <rect x="142" y="325" width="38" height="105"
+                  rx="15" fill="#274060"/>
+
+            <rect x="309" y="325" width="38" height="105"
+                  rx="15" fill="#274060"/>
+
+            <rect x="174" y="367" width="140" height="60"
+                  rx="18" fill="#335C81"/>
+
+            <!-- Cojín -->
+            <rect x="221" y="299" width="52" height="66"
+                  rx="8" fill="#65AFFF"/>
+
+            <!-- Planta -->
+            <path d="M409 382 V248"
+                  fill="none" stroke="#65AFFF" stroke-width="5"/>
+
+            <ellipse cx="391" cy="279" rx="13" ry="30"
+                     transform="rotate(-40 391 279)" fill="#65AFFF"/>
+
+            <ellipse cx="427" cy="302" rx="13" ry="30"
+                     transform="rotate(40 427 302)" fill="#5899E2"/>
+
+            <ellipse cx="389" cy="330" rx="13" ry="29"
+                     transform="rotate(-50 389 330)" fill="#65AFFF"/>
+
+            <!-- Maceta -->
+            <path d="M383 375 H435 L426 437 H392 Z" fill="#5899E2"/>
+
+            <!-- Mesa y cuaderno -->
+            <path d="M45 420 H130 L118 480 H57 Z" fill="#1B2845"/>
+            <ellipse cx="88" cy="417" rx="54" ry="13" fill="#335C81"/>
+            <path d="M67 405 L108 402 L116 414 L74 417 Z" fill="#65AFFF"/>
+          </svg>
+        </div>
+
+        <p class="pie-imagen">El lugar donde todo comienza.</p>
+      </div>
+    </div>
+
+    <div class="equipo">
+      <p><strong>Grupo 3 · Comunicación Audiovisual</strong></p>
+
+      <p>
+        Noelia Estévez · Leticia Laut · Sofia Juarez ·
+        Irene Sánchez · Lorea Sanmamed · Marta Escamilla
+      </p>
+
+      <p>
+        Una psicóloga acompaña a tres o cuatro pacientes
+        y descubre, a través de sus historias,
+        la dificultad de trabajar en sí misma.
+      </p>
+    </div>
+  </header>
+
+  <!-- =====================================
+       BLOQUE 2: HUB DE CONTENIDOS
+       Incluye tarjetas y sus secciones.
+       ===================================== -->
+  <main class="contenedor">
+
+    <section id="portada" aria-labelledby="titulo-hub">
+      <p class="categoria">Dentro de la consulta</p>
+      <h2 id="titulo-hub">Cada historia, a su tiempo.</h2>
+
+      <p class="descripcion-hub">
+        Un recorrido por el universo de ADAGIO
+        y las piezas de nuestro Proyecto Transversal.
+      </p>
+
+      <div class="tarjetas">
+
+        <article class="tarjeta destacada">
+          <p class="numero">01 / CORTOMETRAJE</p>
+          <h3>Quien escucha también tiene una historia.</h3>
+          <p class="resumen">
+            Una psicóloga, distintas vidas y una pregunta:
+            ¿cómo acompañar a otros cuando cuesta
+            escucharse a una misma?
+          </p>
+          <a class="boton" href="#corto">
+            Descubrir el corto ↓
+          </a>
+        </article>
+
+        <article class="tarjeta">
+          <p class="numero">02 / PODCAST</p>
+          <h3>Lo que suena entre silencios.</h3>
+          <p class="resumen">
+            La pieza sonora del proyecto.
+            Su enfoque está pendiente de concretar.
+          </p>
+          <a class="boton" href="#podcast">
+            Explorar el podcast ↓
+          </a>
+        </article>
+
+        <article class="tarjeta">
+          <p class="numero">03 / MOOD REEL</p>
+          <h3>La forma de sentir ADAGIO.</h3>
+          <p class="resumen">
+            Una aproximación a la estética
+            y atmósfera del cortometraje.
+          </p>
+          <a class="boton" href="#mood">
+            Ver la propuesta visual ↓
+          </a>
+        </article>
+
+        <article class="tarjeta">
+          <p class="numero">04 / GUION TÉCNICO</p>
+          <h3>Del interior al encuadre.</h3>
+          <p class="resumen">
+            La traducción de la historia a planos,
+            acciones y sonido, con apoyo de IA
+            y revisión del equipo.
+          </p>
+          <a class="boton" href="#guion">
+            Consultar el guion ↓
+          </a>
+        </article>
+
+        <article class="tarjeta">
+          <p class="numero">05 / DOCUMENTACIÓN</p>
+          <h3>Antes de contar, comprender.</h3>
+          <p class="resumen">
+            Contexto, personajes y música:
+            las bases de nuestro universo narrativo.
+          </p>
+          <a class="boton" href="#documentacion">
+            Conocer el proyecto ↓
+          </a>
+        </article>
+
+        <article class="tarjeta">
+          <p class="numero">06 / CONSULTA FICTICIA</p>
+          <h3>Un primer paso. Sin prisa.</h3>
+          <p class="resumen">
+            Entra en la consulta ficticia
+            y descubre su espacio de primera toma de contacto.
+          </p>
+          <a class="boton" href="#consulta">
+            Entrar en la consulta ↓
+          </a>
+        </article>
+
+      </div>
+
+      <p class="aviso">
+        ADAGIO es un proyecto audiovisual universitario.
+        La consulta y la solicitud de cita forman parte
+        de su ficción; no ofrecen atención psicológica.
+      </p>
+    </section>
+
+    <!-- =====================================
+         CORTOMETRAJE
+         ===================================== -->
+    <section
+      id="corto"
+      class="seccion-contenido"
+      aria-labelledby="titulo-corto"
+    >
+      <a class="volver" href="#portada">↑ Volver al hub</a>
+
+      <p class="categoria">01 / Cortometraje</p>
+      <h2 id="titulo-corto">
+        Quien escucha también tiene una historia.
+      </h2>
+
+      <p class="introduccion">
+        Una psicóloga acompaña a sus pacientes
+        en sus conflictos personales mientras descubre
+        la dificultad de afrontar los suyos.
+      </p>
+
+      <!-- FOTO: sustituye el valor de src por tu imagen.
+           Actualiza alt y el pie de foto. -->
+      <figure class="foto-bloque">
+        <img
+          class="foto"
+          src="https://img.magnific.com/fotos-premium/sofa-habitacion-azul_828688-1474.jpg?semt=ais_hybrid&w=740&q=80"
+          alt="Espacio reservado para una foto del cortometraje"
+          loading="lazy"
+          width="800"
+          height="400"
+        >
+        <figcaption>Foto del cortometraje · Pendiente</figcaption>
+      </figure>
+
+      <div class="paneles">
+        <article class="panel">
+          <h3>Sinopsis</h3>
+          <p>
+            A través de las sesiones con tres o cuatro pacientes,
+            la protagonista conoce distintas historias
+            que comienzan a reflejar aspectos de su propia vida.
+          </p>
+        </article>
+
+        <article class="panel">
+          <h3>La música como vínculo</h3>
+          <p>
+            Cada historia está vinculada a una canción.
+            La música acompaña sentimientos, recuerdos
+            y experiencias que no siempre pueden
+            expresarse con palabras.
+          </p>
+        </article>
+      </div>
+
+      <div class="pendiente">
+        <strong>Cortometraje en desarrollo.</strong>
+        <p>
+          Sustituye este bloque por el vídeo
+          o el enlace a la pieza final cuando esté disponible.
+        </p>
+      </div>
+    </section>
+
+    <!-- =====================================
+         PODCAST
+         ===================================== -->
+    <section
+      id="podcast"
+      class="seccion-contenido"
+      aria-labelledby="titulo-podcast"
+    >
+      <a class="volver" href="#portada">↑ Volver al hub</a>
+
+      <p class="categoria">02 / Podcast</p>
+      <h2 id="titulo-podcast">Lo que suena entre silencios.</h2>
+
+      <p class="introduccion">
+        Este espacio reunirá la pieza sonora del proyecto.
+        El enfoque, formato y contenido están pendientes
+        de definir por el equipo.
+      </p>
+
+      <!-- FOTO: cambia src por la imagen de tu podcast. -->
+      <figure class="foto-bloque">
+        <img
+          class="foto"
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-B_1OI3P7apQHCwSTOxkmeBeXIqJwbE0cfq6j2ovDA7xd1qjwgOE1_GCH&s=10"
+          alt="Espacio reservado para la portada del podcast"
+          loading="lazy"
+          width="800"
+          height="400"
+        >
+        <figcaption>Portada del podcast · Pendiente</figcaption>
+      </figure>
+
+      <div class="paneles">
+        <article class="panel">
+          <h3>La propuesta</h3>
+          <p>
+            Añade aquí la presentación definitiva del podcast:
+            qué cuenta, desde qué perspectiva y qué aporta
+            al proyecto.
+          </p>
+        </article>
+
+        <article class="panel">
+          <h3>Escuchar</h3>
+          <p>
+            Añade aquí el reproductor o el enlace
+            cuando esté disponible la grabación.
+          </p>
+        </article>
+      </div>
+
+      <div class="pendiente">
+        <strong>Podcast pendiente de definición y producción.</strong>
+        <p>Aquí podrás incorporar el contenido definitivo.</p>
+      </div>
+    </section>
+
+    <!-- =====================================
+         MOODBOARD Y MOOD REEL
+         ===================================== -->
+    <section
+      id="mood"
+      class="seccion-contenido"
+      aria-labelledby="titulo-mood"
+    >
+      <a class="volver" href="#portada">↑ Volver al hub</a>
+
+      <p class="categoria">03 / Moodboard y mood reel</p>
+      <h2 id="titulo-mood">La forma de sentir ADAGIO.</h2>
+
+      <p class="introduccion">
+        Una aproximación visual a la estética
+        y atmósfera que queremos dar al cortometraje.
+      </p>
+
+      <!-- FOTO: cambia src por tu moodboard o referencia visual. -->
+      <figure class="foto-bloque">
+        <img
+          class="foto"
+          src="https://www.lavanguardia.com/files/image_449_220/files/fp/uploads/2025/09/10/68c17949b65c7.r_d.973-648-2339.jpeg"
+          alt="Espacio reservado para una imagen del moodboard"
+          loading="lazy"
+          width="800"
+          height="400"
+        >
+        <figcaption>Moodboard · Imagen pendiente</figcaption>
+      </figure>
+
+      <div class="paneles">
+        <article class="panel">
+          <h3>El tono</h3>
+          <p>
+            El universo narrativo se plantea como íntimo,
+            melancólico y reflexivo.
+          </p>
+        </article>
+
+        <article class="panel">
+          <h3>Las referencias</h3>
+          <p>
+            Añade aquí vuestras referencias de iluminación,
+            color, encuadre, textura y ritmo de montaje.
+          </p>
+        </article>
+      </div>
+
+      <div class="paneles">
+        <article class="panel">
+          <h3>Expresionismo alemán y neo-noir</h3>
+
+          <p>
+            Nos inspiramos en el expresionismo alemán
+            y el neo-noir para trasladar los conflictos internos
+            de los personajes a la imagen. Buscamos que las sombras,
+            los contrastes de luz y las composiciones desequilibradas
+            expresen la soledad y la necesidad de control
+            de la protagonista.
+          </p>
+
+          <p>
+            El neo-noir aporta una referencia de incertidumbre
+            y distancia emocional. Los tonos fríos y las zonas
+            de penumbra acompañan la contradicción entre
+            su aparente seguridad profesional y la dificultad
+            de afrontar sus propios conflictos.
+          </p>
+
+          <p>
+            Queremos que la consulta refleje esa tensión:
+            un espacio donde escucha a los demás mientras
+            evita enfrentarse a sí misma.
+          </p>
+        </article>
+
+        <article class="panel">
+          <h3>Inspiración musical</h3>
+
+          <p>
+            Partimos de las emociones que nos transmiten
+            las canciones para imaginar personajes y conflictos
+            propios. Sus letras, voces y atmósferas nos ayudan
+            a explorar aquello que los pacientes sienten,
+            pero no siempre consiguen expresar.
+          </p>
+
+          <p>
+            En nuestra interpretación creativa, «Unethical»,
+            de Faouzia, inspira el duelo entre hermanos;
+            «Bruises», de Reneé Rapp, sugiere vulnerabilidad
+            y heridas emocionales; y «Answer»,
+            de Tyler, The Creator, acompaña la búsqueda
+            de reconocimiento familiar.
+          </p>
+
+          <p>
+            Estas asociaciones son puntos de partida
+            para desarrollar relatos originales,
+            sin reproducir literalmente las letras.
+            Cada referencia aporta una sensibilidad distinta
+            al universo de ADAGIO.
+          </p>
+        </article>
+      </div>
+
+      <div class="pendiente">
+        <strong>Mood reel en desarrollo.</strong>
+        <p>
+          Sustituye este bloque por el vídeo
+          o su enlace cuando esté disponible.
+        </p>
+      </div>
+    </section>
+
+    <!-- =====================================
+         GUION TÉCNICO
+         ===================================== -->
+    <section
+      id="guion"
+      class="seccion-contenido"
+      aria-labelledby="titulo-guion"
+    >
+      <a class="volver" href="#portada">↑ Volver al hub</a>
+
+      <p class="categoria">04 / Guion técnico</p>
+      <h2 id="titulo-guion">Del interior al encuadre.</h2>
+
+      <p class="introduccion">
+        La planificación audiovisual de ADAGIO:
+        cómo convertir la historia en imágenes y sonido.
+      </p>
+
+      <!-- FOTO: cambia src por una imagen o esquema del guion. -->
+      <figure class="foto-bloque">
+        <img
+          class="foto"
+          src="https://www.elperiodicodeycodendaute.es/wp-content/uploads/2024/10/salud-mental55.jpeg"
+          alt="Espacio reservado para una imagen del guion técnico"
+          loading="lazy"
+          width="800"
+          height="400"
+        >
+        <figcaption>Guion técnico · Imagen pendiente</figcaption>
+      </figure>
+
+      <div class="paneles">
+        <article class="panel">
+          <h3>Planificación de imagen</h3>
+          <p>
+            Añade aquí las secuencias, tipos de plano,
+            movimientos de cámara y acciones del guion técnico.
+          </p>
+        </article>
+
+        <article class="panel">
+          <h3>Sonido y revisión</h3>
+          <p>
+            Añade las indicaciones sonoras y explica
+            cómo el equipo ha revisado el trabajo
+            desarrollado con apoyo de IA.
+          </p>
+        </article>
+      </div>
+
+      <div class="pendiente">
+        <strong>Guion técnico en desarrollo.</strong>
+        <p>
+          Aquí podrás añadir el enlace al documento
+          cuando esté revisado.
+        </p>
+      </div>
+    </section>
+
+    <!-- =====================================
+         DOCUMENTACIÓN
+         ===================================== -->
+    <section
+      id="documentacion"
+      class="seccion-contenido"
+      aria-labelledby="titulo-documentacion"
+    >
+      <a class="volver" href="#portada">↑ Volver al hub</a>
+
+      <p class="categoria">05 / Documentación</p>
+      <h2 id="titulo-documentacion">Antes de contar, comprender.</h2>
+
+      <p class="introduccion">
+        Las bases del universo de ADAGIO:
+        su protagonista, los pacientes, la consulta
+        y el papel de la música.
+      </p>
+
+      <!-- FOTO: cambia src por una imagen de documentación. -->
+      <figure class="foto-bloque">
+        <img
+          class="foto"
+          src="https://i.pinimg.com/736x/ef/a6/c7/efa6c7166a602da628bbad8fa8349256.jpg"
+          alt="Espacio reservado para una imagen de documentación"
+          loading="lazy"
+          width="800"
+          height="400"
+        >
+        <figcaption>Documentación · Imagen pendiente</figcaption>
+      </figure>
+
+      <div class="paneles">
+        <article class="panel">
+          <h3>La protagonista</h3>
+          <p>
+            Una psicóloga acostumbrada a comprender
+            el sufrimiento de los demás encuentra dificultades
+            para afrontar sus propios conflictos.
+          </p>
+        </article>
+
+        <article class="panel">
+          <h3>Los pacientes</h3>
+          <p>
+            Cada paciente presenta una historia independiente.
+            Sus relatos se conectan a través de la protagonista
+            y contribuyen a su desarrollo personal.
+          </p>
+        </article>
+
+        <article class="panel">
+          <h3>La consulta</h3>
+          <p>
+            Es el espacio principal de encuentro:
+            un lugar de intimidad donde los personajes
+            muestran aspectos que permanecen ocultos
+            en su vida cotidiana.
+          </p>
+        </article>
+
+        <article class="panel">
+          <h3>La música</h3>
+          <p>
+            Las canciones funcionan como una forma
+            alternativa de expresión y acompañan
+            los conflictos emocionales de los personajes.
+          </p>
+        </article>
+      </div>
+
+      <div class="pendiente">
+        <strong>Documentación completa pendiente de enlazar.</strong>
+        <p>
+          Añade aquí el enlace a vuestra versión revisada,
+          incluyendo las fuentes utilizadas.
+        </p>
+      </div>
+    </section>
+
+    <!-- =====================================
+         CONSULTA FICTICIA
+         ===================================== -->
+    <section
+      id="consulta"
+      class="seccion-contenido"
+      aria-labelledby="titulo-consulta"
+    >
+      <a class="volver" href="#portada">↑ Volver al hub</a>
+
+      <p class="categoria">06 / Consulta ficticia</p>
+      <h2 id="titulo-consulta">
+        Un primer paso.<br>
+        <em>Sin prisa.</em>
+      </h2>
+
+      <p class="introduccion">
+        Este es el espacio imaginario donde suceden
+        las historias de ADAGIO. Entra, detente
+        y descubre el lugar donde todo comienza.
+      </p>
+
+      <!-- FOTO: cambia src por una foto de la consulta ficticia. -->
+      <figure class="foto-bloque">
+        <img
+          class="foto"
+          src="https://pymstatic.com/94012/terapia-familiar-pozuelo.jpg"
+          alt="Espacio reservado para una foto de la consulta ficticia"
+          loading="lazy"
+          width="800"
+          height="400"
+        >
+        <figcaption>Consulta ficticia · Foto pendiente</figcaption>
+      </figure>
+
+      <div class="paneles">
+        <article class="panel">
+          <h3>Un espacio para escuchar</h3>
+          <p>
+            La consulta es el punto de encuentro
+            entre la psicóloga y sus pacientes.
+          </p>
+          <p>
+            Sus historias, vinculadas a la música,
+            construyen un relato íntimo sobre los demás
+            y sobre la propia protagonista.
+          </p>
+          <p>
+            Este espacio pertenece a la ficción
+            de nuestro proyecto audiovisual.
+          </p>
+        </article>
+
+        <article class="panel">
+          <h3>Primera toma de contacto</h3>
+          <p>
+            Un espacio para el formulario del proyecto.
+            La solicitud es ficticia y no reserva una cita real.
+          </p>
+
+          <!-- Baja al formulario dentro de la misma página. -->
+          <a class="boton" href="#formulario">
+            Rellenar formulario ↓
+          </a>
+        </article>
+      </div>
+
+      <!-- FORMULARIO DENTRO DE LA MISMA CONSULTA -->
+      <section id="formulario" aria-labelledby="titulo-formulario">
+        <p class="categoria">Solicitud ficticia</p>
+        <h3 id="titulo-formulario">Tu primera sesión.</h3>
+
+        <p class="introduccion">
+          Aquí se incorporará el formulario de primera
+          toma de contacto del proyecto.
+        </p>
+
+        <div class="pendiente">
+          <strong>Formulario </strong>
+<center><iframe src="https://docs.google.com/forms/d/e/1FAIpQLSePGeO-byIqoiVj7Rz7EgcNLUCMo9UkAz1o4N6c6oB7vAyJ5g/viewform?embedded=true" width="640" height="2206" frameborder="0" marginheight="0" marginwidth="0">Cargando…</iframe>
+         
+        </div>
+        <a class="volver" href="#consulta">
+          ↑ Volver a la presentación de la consulta
+        </a>
+      </section>
+    </section>
+
+  </main>
+
+  <!-- =====================================
+       BLOQUE 3: PIE DE PÁGINA
+       ===================================== -->
+  <footer>
+    <div class="contenedor">
+      <div class="columnas-pie">
+
+        <div>
+          <div class="marca">ADAGIO.</div>
+          <p>Escuchar también es detenerse.</p>
+        </div>
+
+        <div>
+          <strong>Información académica</strong>
+          <p>Asignatura: [nombre oficial pendiente]</p>
+          <p>Curso académico: [confirmar curso]</p>
+          <p>Grupo 3 · Comunicación Audiovisual</p>
+        </div>
+
+        <div>
+          <strong>Contacto del proyecto</strong>
+          <p>[correo institucional pendiente]</p>
+
+          <!-- Sustituye href por la URL del repositorio. -->
+          <a href="#estado-github" aria-describedby="estado-github">
+            Repositorio de GitHub
+          </a>
+
+          <p id="estado-github">
+            Enlace pendiente de publicación.
+          </p>
+        </div>
+
+      </div>
+
+      <p class="nota-final">
+        Proyecto Transversal · Grupo 3.
+        Consulta ficticia: no ofrece atención psicológica.
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>
